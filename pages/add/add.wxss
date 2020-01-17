@@ -1,0 +1,69 @@
+@import "../../lib/weui.wxss";
+
+.search button {
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+  margin: 100rpx auto;
+  align-items: center;
+}
+
+.search image {
+  width: 85%;
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+  margin: 20rpx 40rpx;
+  padding: 15rpx;
+}
+
+.search input {
+  padding: 0 15rpx;
+  width: 100%;
+  height: 100rpx;
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+  margin: 0rpx 30rpx 0rpx 5rpx;
+}
+
+.input_title {
+  width: 28%;
+  text-align: center;
+}
+
+.itemView {
+  margin: 10px 10px 0 10px;
+  height: 50px;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+/* 摘要的3个样式 */
+
+.search textarea {
+  padding: 25rpx 15rpx;
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+  margin: 0rpx 30rpx 0rpx 3rpx;
+}
+
+.textareaView {
+  margin: 10px 10px 0 10px;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+.textarea_title {
+  width: 25%;
+  text-align: center;
+}
+
+/* 选择框的一个样式*/
+.picker{
+  padding: 0 15rpx;
+  width: 100%;
+  height: 100rpx;
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+  margin: 0rpx 30rpx 0rpx 5rpx;
+}

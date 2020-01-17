@@ -1,0 +1,9 @@
+/* pages/isbn/isbn.wxss */
+.btn{
+  width: 300rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin: 30rpx auto;
+  text-align: center;
+  background: #cccccc;
+}

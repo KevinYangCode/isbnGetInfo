@@ -1,0 +1,87 @@
+<!--pages/add/add.wxml-->
+<view wx:if="{{code==10000}}">
+  <view class='page_row'>
+    <view class="search">
+      <form bindsubmit="bindFormSubmit">
+        <image name="pic" src="{{picSrc}}" mode="widthFix"></image>
+     
+        <view class="itemView">
+          <view class="input_title">ISBN:</view>
+          <input type="number" maxlength="13" name="isbn" value="{{ISBN}}" />
+        </view>
+
+        <view class="itemView">
+          <view class="input_title">书名:</view>
+          <input type="text" name="name" value="{{title}}" />
+        </view>
+
+        <view class="itemView">
+          <view class="input_title">作者:</view>
+          <input type="text" name="author" value="{{author}}" />
+        </view>
+
+        <view class="itemView">
+          <view class="input_title">出版社:</view>
+          <input type="text" name="publish" value="{{publisher}}" />
+        </view>
+
+        <view class="textareaView">
+          <view class="textarea_title">摘要:</view>
+          <textarea bindblur="bindTextAreaBlur" auto-height name="introduction" value="{{summary}}" />
+        </view>
+
+        <view class="itemView">
+          <view class="input_title">价格:</view>
+          <input type="digit" name="price" value="{{price}}" />
+        </view>
+
+        <picker mode="date" name="pubDate" value="{{pubdate}}" bindchange="bindDateChange">
+          <view class="itemView">
+            <view class="input_title">出版时间:</view>
+            <view class="picker">
+              <text>{{pubdate}}</text>
+            </view>
+          </view>
+        </picker>
+
+        <picker bindchange="pickerChangeC"  name="classId" value="{{cIndex}}" range="{{classifyArray}}" range-key="{{'className'}}">
+          <view class="itemView">
+            <view class="input_title">分类ID:</view>
+            <view class="picker">
+              <text>{{classifyArray[cIndex].classId}}-{{classifyArray[cIndex].className}}</text>
+            </view>
+          </view>
+        </picker>
+
+        <picker bindchange="pickerChangeB" name="location" value="{{bIndex}}" range="{{bookshelfArray}}" range-key="{{'name'}}">
+          <view class="itemView">
+            <view class="input_title">书架位置:</view>
+            <view class="picker">
+              <text>{{bookshelfArray[bIndex].bsId}}-{{bookshelfArray[bIndex].name}}</text>
+            </view>
+          </view>
+        </picker>
+
+
+        <picker bindchange="pickerChangeU" name="owner" value="{{uIndex}}" range="{{userArray}}" range-key="{{'stuid'}}">
+          <view class="itemView">
+            <view class="input_title">拥有者:</view>
+            <view class="picker">
+              <text>{{userArray[uIndex].useruuid}}-{{userArray[uIndex].stuid}}</text>
+            </view>
+          </view>
+        </picker>
+
+        <button type="primary" formType="submit">入库</button>
+
+      </form>
+    </view>
+
+  </view>
+</view>
+<view wx:elif="{{code==10001}}">错误的请求appkey</view>
+<view wx:elif="{{code==11010}}">商家接口调用异常，请稍后再试</view>
+<view wx:elif="{{code==11030}}">商家接口返回格式有误</view>
+<view wx:elif="{{code==10003}}">不存在相应的数据信息</view>
+<view wx:elif="{{code==10010}}">接口需要付费，请充值</view>
+<view wx:else>其他错误，请查询京东万象ISBN对应的错误==>{{code}}</view>

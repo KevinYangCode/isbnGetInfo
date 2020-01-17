@@ -1,0 +1,25 @@
+<!--index.wxml-->
+<view class="title">管理员登录</view>
+<form bindsubmit="bindFormSubmit">
+
+  <view class="userinfo">
+    <view class="itemView">
+      <view class="input_title">用户名:</view>
+      <input type="number" name="stuid" value="20170404430140" placeholder="请输入用户名" />
+    </view>
+    <view class="itemView">
+      <view class="input_title">密码:</view>
+      <input type="password" name="password" value="123456" placeholder="请输入密码" />
+    </view>
+  </view>
+
+  <view class="cpt">
+    <view class="itemView">
+      <view class="input_title">验证码:</view>
+      <input type="text" name="code" placeholder="请输入验证码" />
+      <image src="{{captcha}}"  bindtap="reqCaptcha"></image>
+    </view>
+  </view>
+
+  <button type="primary" formType="submit">登录</button>
+</form>
