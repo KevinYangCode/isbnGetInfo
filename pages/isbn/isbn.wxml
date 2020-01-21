@@ -1,4 +1,5 @@
 <!--pages/isbn/isbn.wxml-->
 <view class="container">  
-  <view class="btn" bindtap='getScancode'>扫一扫</view>   
+  <view class="btn" bindtap='getScancode'>扫一扫</view>  
+  <view class="btn" bindtap='logout'>退出登录</view> 
 </view>

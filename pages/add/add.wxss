@@ -1,5 +1,6 @@
-@import "../../lib/weui.wxss";
-
+.hidden-input{
+  display: none;
+}
 .search button {
   border-radius: 5px;
   border: 1px solid #d0d0d0;

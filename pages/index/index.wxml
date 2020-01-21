@@ -5,11 +5,11 @@
   <view class="userinfo">
     <view class="itemView">
       <view class="input_title">用户名:</view>
-      <input type="number" name="stuid" value="20170404430140" placeholder="请输入用户名" />
+      <input type="number" name="stuid" placeholder="请输入用户名" />
     </view>
     <view class="itemView">
       <view class="input_title">密码:</view>
-      <input type="password" name="password" value="123456" placeholder="请输入密码" />
+      <input type="password" name="password" placeholder="请输入密码" />
     </view>
   </view>
 

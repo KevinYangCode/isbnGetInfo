@@ -3,8 +3,10 @@
   <view class='page_row'>
     <view class="search">
       <form bindsubmit="bindFormSubmit">
-        <image name="pic" src="{{picSrc}}" mode="widthFix"></image>
-     
+        <image src="{{picSrc}}" mode="widthFix"></image>
+    
+          <input type="text" name="pic" class='hidden-input' value="{{picSrc}}" />
+        
         <view class="itemView">
           <view class="input_title">ISBN:</view>
           <input type="number" maxlength="13" name="isbn" value="{{ISBN}}" />
@@ -48,7 +50,7 @@
           <view class="itemView">
             <view class="input_title">分类ID:</view>
             <view class="picker">
-              <text>{{classifyArray[cIndex].classId}}-{{classifyArray[cIndex].className}}</text>
+              <text>{{classifyArray[cIndex].className}}</text>
             </view>
           </view>
         </picker>
@@ -57,17 +59,16 @@
           <view class="itemView">
             <view class="input_title">书架位置:</view>
             <view class="picker">
-              <text>{{bookshelfArray[bIndex].bsId}}-{{bookshelfArray[bIndex].name}}</text>
+              <text>{{bookshelfArray[bIndex].name}}</text>
             </view>
           </view>
         </picker>
 
-
-        <picker bindchange="pickerChangeU" name="owner" value="{{uIndex}}" range="{{userArray}}" range-key="{{'stuid'}}">
+        <picker bindchange="pickerChangeU" name="owner" value="{{uIndex}}" range="{{userArray}}" range-key="{{'name'}}">
           <view class="itemView">
             <view class="input_title">拥有者:</view>
             <view class="picker">
-              <text>{{userArray[uIndex].useruuid}}-{{userArray[uIndex].stuid}}</text>
+              <text>{{userArray[uIndex].name}}</text>
             </view>
           </view>
         </picker>

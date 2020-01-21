@@ -4,12 +4,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    inputValue: '',
     date: '2016-09-01',
-
-    cIndex: 1,
-    bIndex: 1,
-    uIndex: 1,
+    cIndex: 0,
+    bIndex: 0,
+    uIndex: 0,
 
     classifyArray: '',
     bookshelfArray: '',
@@ -80,14 +78,69 @@ Page({
     e.detail.value.location = this.data.bookshelfArray[e.detail.value.location].bsId
     e.detail.value.owner = this.data.userArray[e.detail.value.owner].useruuid
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
+    if (e.detail.value.pubDate.length < 8) {
+      wx.showToast({
+        icon: 'fail',
+        title: "请查看出版时间格式是否正确",
+        duration: 2000
+      });
+    } else {
+      wx.request({
+        url: 'http://localhost:8080/book',
+        data: {
+          name: e.detail.value.name,
+          author: e.detail.value.author,
+          publish: e.detail.value.publish,
+          isbn: e.detail.value.isbn,
+          introduction: e.detail.value.introduction,
+          price: e.detail.value.price,
+          pubDate: e.detail.value.pubDate,
+          classId: e.detail.value.classId,
+          pic: e.detail.value.pic,
+          location: e.detail.value.location,
+          owner: e.detail.value.owner,
+          status: 1,
+        },
+        method: 'post',
+        header: {
+          'content-Type': 'application/json',
+          'cookie': wx.getStorageSync("sessionid"),
+        },
+        success: res => {
+          console.log(res);
+          if (res.data.code == 0) {
+            wx.showToast({
+              title: res.data.msg,
+              duration: 2000
+            });
+            // 跳转到扫描再次添加
+            wx.navigateTo({
+              url: '../isbn/isbn',
+            })
+          }
+          if (res.data.code == -1) {
+            wx.showToast({
+              title: res.data.msg,
+              duration: 2000
+            });
+          }
+        },
+        fail: res => {
+          wx.showToast({
+            title: "失败",
+            duration: 2000
+          });
+        }
+      })
+    }
+
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     var that = this;
-    console.log("扫出来传过来的内容" + options.ISBN);
-
+    var isbn = options.ISBN;
     // 通过全局变量获取值
     this.setData({
       classifyArray: app.globalData.classifyArray,
@@ -97,9 +150,9 @@ Page({
 
     // 默认为GET请求
     wx.request({
-      url: 'http://library.jianzha.xyz/api/book1.json',
-      headers: {
-        'Content-Type': 'application/json'
+      url: 'https://way.jd.com/jisuapi/isbn?isbn=' + isbn + '&appkey=111',//需要申请appkey
+      header: {
+        'content-Type': 'application/json'
       },
       success(res) {
         // console.log(res);
