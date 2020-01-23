@@ -37,9 +37,8 @@ Page({
 
   logout: function() {
     var that = this;
-    console.log("退出");
     wx.request({
-      url: 'http://localhost:8080/shiro/logout',
+      url: 'https://library.jianzha.xyz/shiro/logout',
       header: {
         'content-Type': 'application/json',
         'cookie': wx.getStorageSync("sessionid"),
@@ -49,6 +48,12 @@ Page({
           url: '../index/index',
         })
       },
+      fail(res) {
+        wx.showToast({
+          title: '接口调用失败！',
+          duration: 2000
+        })
+      }
     })
   }
 })

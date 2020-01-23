@@ -16,6 +16,7 @@ Page({
      * 书的信息
      */
     code: '',
+    msg: '',
     picSrc: '',
     ISBN: '',
     title: '',
@@ -29,7 +30,6 @@ Page({
    * 时间选择更新
    */
   bindDateChange: function(e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       pubdate: e.detail.value
     })
@@ -44,8 +44,6 @@ Page({
    * 分类ID选择器
    */
   pickerChangeC: function(e) {
-    console.log('分类picker发送改变，携带值为', e.detail.value)
-    console.log('分类picker发送改变，具体值为', this.data.classifyArray[e.detail.value].className)
     this.setData({
       cIndex: e.detail.value
     })
@@ -54,8 +52,6 @@ Page({
    * 书架ID选择器
    */
   pickerChangeB: function(e) {
-    console.log('书架picker发送改变，携带值为', e.detail.value)
-    console.log('书架picker发送改变，具体值为', this.data.bookshelfArray[e.detail.value].bsId)
     this.setData({
       bIndex: e.detail.value
     })
@@ -64,8 +60,6 @@ Page({
    * 用户ID选择器
    */
   pickerChangeU: function(e) {
-    console.log('用户picker发送改变，携带值为', e.detail.value)
-    console.log('用户picker发送改变，具体值为', this.data.userArray[e.detail.value].useruuid)
     this.setData({
       uIndex: e.detail.value
     })
@@ -77,7 +71,6 @@ Page({
     e.detail.value.classId = this.data.classifyArray[e.detail.value.classId].classId
     e.detail.value.location = this.data.bookshelfArray[e.detail.value.location].bsId
     e.detail.value.owner = this.data.userArray[e.detail.value.owner].useruuid
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
     if (e.detail.value.pubDate.length < 8) {
       wx.showToast({
         icon: 'fail',
@@ -86,7 +79,7 @@ Page({
       });
     } else {
       wx.request({
-        url: 'http://localhost:8080/book',
+        url: 'https://library.jianzha.xyz/book',
         data: {
           name: e.detail.value.name,
           author: e.detail.value.author,
@@ -150,22 +143,32 @@ Page({
 
     // 默认为GET请求
     wx.request({
-      url: 'https://way.jd.com/jisuapi/isbn?isbn=' + isbn + '&appkey=111',//需要申请appkey
+      url: 'https://way.jd.com/jisuapi/isbn?isbn=' + isbn + '&appkey=92ba4d9f21f79e394abeeb90cc611fb4',
       header: {
         'content-Type': 'application/json'
       },
       success(res) {
-        // console.log(res);
         that.setData({
           code: res.data.code,
-          picSrc: res.data.result.result.pic,
-          ISBN: res.data.result.result.isbn,
-          title: res.data.result.result.title,
-          author: res.data.result.result.author,
-          publisher: res.data.result.result.publisher,
-          summary: res.data.result.result.summary,
-          price: res.data.result.result.price,
-          pubdate: res.data.result.result.pubdate,
+          msg: res.data.msg,
+        })
+        if (res.data.code == '10000') {
+          that.setData({
+            picSrc: res.data.result.result.pic,
+            ISBN: res.data.result.result.isbn,
+            title: res.data.result.result.title,
+            author: res.data.result.result.author,
+            publisher: res.data.result.result.publisher,
+            summary: res.data.result.result.summary,
+            price: res.data.result.result.price,
+            pubdate: res.data.result.result.pubdate,
+          })
+        };
+      },
+      fail(res) {
+        wx.showToast({
+          title: '接口调用失败！',
+          duration: 2000
         })
       }
     })

@@ -80,9 +80,4 @@
 
   </view>
 </view>
-<view wx:elif="{{code==10001}}">错误的请求appkey</view>
-<view wx:elif="{{code==11010}}">商家接口调用异常，请稍后再试</view>
-<view wx:elif="{{code==11030}}">商家接口返回格式有误</view>
-<view wx:elif="{{code==10003}}">不存在相应的数据信息</view>
-<view wx:elif="{{code==10010}}">接口需要付费，请充值</view>
-<view wx:else>其他错误，请查询京东万象ISBN对应的错误==>{{code}}</view>
+<view wx:else>{{msg}}</view>

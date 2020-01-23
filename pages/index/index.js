@@ -18,19 +18,24 @@ Page({
     var that = this;
     // 通过请求获取图片，带cookie（可以直接把url给src，但这样不会拿到cookie）
     wx.request({
-      url: 'http://localhost:8080/captcha',
+      url: 'https://library.jianzha.xyz/captcha',
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json'
       },
       responseType: 'ArrayBuffer',
       success(res) {
-        console.log(res);
         that.setData({
           captcha: 'data:image/png;base64,' + wx.arrayBufferToBase64(res.data),
         })
         // 存储cookie，
         wx.removeStorageSync('sessionid')
         wx.setStorageSync("sessionid", res.header["Set-Cookie"]);
+      },
+      fail(res) {
+        wx.showToast({
+          title: '接口调用失败！',
+          duration: 2000
+        })
       }
     })
   },
@@ -40,12 +45,11 @@ Page({
    */
   bindFormSubmit: function(e) {
     var that = this;
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var stuid = e.detail.value.stuid;
     var password = e.detail.value.password;
     var code = e.detail.value.code;
     wx.request({
-      url: 'http://localhost:8080/login',
+      url: 'https://library.jianzha.xyz/login',
       data: {
         stuid: stuid,
         password: password,
@@ -57,7 +61,6 @@ Page({
         'cookie': wx.getStorageSync("sessionid"),
       },
       success(res) {
-        console.log(res);
         if (res.data.code == 0) {
           // 跳转到扫描
           wx.navigateTo({
@@ -66,38 +69,53 @@ Page({
 
           // 获取分类ID和值
           wx.request({
-            url: 'http://localhost:8080/classify',
+            url: 'https://library.jianzha.xyz/classify',
             header: {
               'content-Type': 'application/json',
               'cookie': wx.getStorageSync("sessionid"),
             },
             success: res => {
-              console.log(res);
               app.globalData.classifyArray = res.data.data;
+            },
+            fail(res) {
+              wx.showToast({
+                title: '接口调用失败！',
+                duration: 2000
+              })
             }
           })
           // 获取书架ID和值
           wx.request({
-            url: 'http://localhost:8080/bookshelf',
+            url: 'https://library.jianzha.xyz/bookshelf',
             header: {
               'content-Type': 'application/json',
               'cookie': wx.getStorageSync("sessionid"),
             },
             success: res => {
-              console.log(res);
               app.globalData.bookshelfArray = res.data.data;
+            },
+            fail(res) {
+              wx.showToast({
+                title: '接口调用失败！',
+                duration: 2000
+              })
             }
           })
           // 获取用户ID和值
           wx.request({
-            url: 'http://localhost:8080/userInfo',
+            url: 'https://library.jianzha.xyz/userInfo',
             header: {
               'content-Type': 'application/json',
               'cookie': wx.getStorageSync("sessionid"),
             },
             success: res => {
-              console.log(res);
               app.globalData.userArray = res.data.data;
+            },
+            fail(res) {
+              wx.showToast({
+                title: '接口调用失败！',
+                duration: 2000
+              })
             }
           })
 
@@ -114,6 +132,12 @@ Page({
           that.reqCaptcha();
         }
       },
+      fail(res) {
+        wx.showToast({
+          title: '接口调用失败！',
+          duration: 2000
+        })
+      }
     })
   },
 })
